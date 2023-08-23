@@ -10,9 +10,7 @@ module.exports = {
   },
   devServer: {
     hot: true,
-    static: {
-      directory: path.resolve(__dirname, './dist')
-    },
+    static: path.resolve('./dist'),
     compress: true,
     port: 3000
   },
