@@ -4,7 +4,7 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import Notifications from '../Notifications/Notifications';
 
-function App() {
+function App () {
   return (
     <>
       <Notifications />
