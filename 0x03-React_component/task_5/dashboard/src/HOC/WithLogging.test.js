@@ -1,14 +1,23 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, configure, mount } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import WithLogging from './WithLogging';
 import Login from '../Login/Login';
 
+configure({ adapter: new Adapter() });
+
 describe('<WithLogging />', () => {
-  it('on mount and on unmount with Component when the wrapped element is pure html', () => {
+  it('calls console.log on mount and on unmount with Component when the wrapped element is pure html', () => {
     console.log = jest.fn();
+
     const HOC = WithLogging(() => <p />);
+
     const wrapper = mount(<HOC />);
     expect(wrapper.exists()).toEqual(true);
+
     expect(console.log).toHaveBeenNthCalledWith(
       1,
       'Component Component is mounted'
@@ -18,14 +27,17 @@ describe('<WithLogging />', () => {
       2,
       'Component Component is going to unmount'
     );
+
     jest.restoreAllMocks();
   });
-
-  it('mount and on unmount with the name of the component when the wrapped element is the Login component. ', () => {
+  it('calls console.log mount and on unmount with the name of the component when the wrapped element is the Login component. ', () => {
     console.log = jest.fn();
+
     const HOC = WithLogging(Login);
+
     const wrapper = mount(<HOC />);
     expect(wrapper.exists()).toEqual(true);
+
     expect(console.log).toHaveBeenNthCalledWith(
       1,
       'Component Login is mounted'
@@ -35,6 +47,7 @@ describe('<WithLogging />', () => {
       2,
       'Component Login is going to unmount'
     );
+
     jest.restoreAllMocks();
   });
 });
