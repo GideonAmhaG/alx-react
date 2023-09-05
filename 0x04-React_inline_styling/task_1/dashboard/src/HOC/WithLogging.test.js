@@ -6,10 +6,17 @@ import { shallow, configure, mount } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import WithLogging from './WithLogging';
 import Login from '../Login/Login';
+import { StyleSheetTestUtils } from 'aphrodite';
 
 configure({ adapter: new Adapter() });
 
 describe('<WithLogging />', () => {
+  beforeAll(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
   it('calls console.log on mount and on unmount with Component when the wrapped element is pure html', () => {
     console.log = jest.fn();
 
